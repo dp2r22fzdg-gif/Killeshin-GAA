@@ -1,0 +1,58 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Killeshin GAA//Fixtures//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Killeshin GAA — Home games
+X-WR-TIMEZONE:Europe/Dublin
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VEVENT
+UID:killeshin-men-2026-09-06-0@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260906T170000
+DTEND;TZID=Europe/Dublin:20260906T183000
+SUMMARY:Killeshin v Colt Shanahoe (Men's U13)
+LOCATION:Killeshin GAA Grounds
+DESCRIPTION:U13 Football "C" Competition - League Division 1 - Round 7. R
+ eferee: Pat Moran. Source: https://laoisgaa.ie/fixtures-results/team/gle
+ ann-uiseann/6547884c-ea64-5502-8472-8eb26b092437/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Killeshin v Colt Shanahoe today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-men-2026-09-20-1@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260920T113000
+DTEND;TZID=Europe/Dublin:20260920T130000
+SUMMARY:Killeshin v St Joseph's (Men's U17)
+LOCATION:Killeshin GAA Grounds
+DESCRIPTION:U17 Football "B" Championship - League Division 1 - Round 7. 
+ Source: https://laoisgaa.ie/fixtures-results/team/gleann-uiseann/6547884
+ c-ea64-5502-8472-8eb26b092437/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Killeshin v St Joseph's today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-men-2026-10-24-2@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20261024T190000
+DTEND;TZID=Europe/Dublin:20261024T203000
+SUMMARY:Killeshin v Portarlington (Men's U20)
+LOCATION:Killeshin GAA Grounds
+DESCRIPTION:Under 20 Football Championship - League Division 2 - Round 2.
+  Source: https://laoisgaa.ie/fixtures-results/team/gleann-uiseann/654788
+ 4c-ea64-5502-8472-8eb26b092437/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Killeshin v Portarlington today
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,233 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Killeshin GAA//Fixtures//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Killeshin GAA — All fixtures
+X-WR-TIMEZONE:Europe/Dublin
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VEVENT
+UID:killeshin-ladies-2026-09-04-0@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260904T183000
+DTEND;TZID=Europe/Dublin:20260904T200000
+SUMMARY:Killeshin v An Fraoch (Ladies U12)
+LOCATION:TBC
+DESCRIPTION:U12 Go Games Phase 2 - White - Round 3. Source: https://laois
+ lgfa.ie/fixtures-results/team/killeshin/6063df22-0a35-9537-87e6-5276dfa1
+ 7357/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Killeshin v An Fraoch today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-ladies-2026-09-04-1@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260904T193000
+DTEND;TZID=Europe/Dublin:20260904T210000
+SUMMARY:Ballyfin v Killeshin (Ladies Intermediate)
+LOCATION:Ballyfin GAA
+DESCRIPTION:Intermediate Championship - Round 4. Source: https://laoislgf
+ a.ie/fixtures-results/team/killeshin/6063df22-0a35-9537-87e6-5276dfa1735
+ 7/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Ballyfin v Killeshin today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-ladies-2026-09-05-2@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260905T120000
+DTEND;TZID=Europe/Dublin:20260905T133000
+SUMMARY:Graiguecullen v Killeshin (Ladies U14)
+LOCATION:Annanough GAA
+DESCRIPTION:U14 B League Knockout Stages - Final. Source: https://laoislg
+ fa.ie/fixtures-results/team/killeshin/6063df22-0a35-9537-87e6-5276dfa173
+ 57/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Graiguecullen v Killeshin today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-men-2026-09-06-3@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260906T123000
+DTEND;TZID=Europe/Dublin:20260906T140000
+SUMMARY:Ballyfin CLG v Killeshin (Men's U17)
+LOCATION:Ballyfin GAA
+DESCRIPTION:U17 Football "B" Championship - League Division 1 - Round 6. 
+ Referee: Eamonn O'Connell. Source: https://laoisgaa.ie/fixtures-results/
+ team/gleann-uiseann/6547884c-ea64-5502-8472-8eb26b092437/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Ballyfin CLG v Killeshin today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-men-2026-09-06-4@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260906T170000
+DTEND;TZID=Europe/Dublin:20260906T183000
+SUMMARY:Killeshin v Colt Shanahoe (Men's U13)
+LOCATION:Killeshin GAA Grounds
+DESCRIPTION:U13 Football "C" Competition - League Division 1 - Round 7. R
+ eferee: Pat Moran. Source: https://laoisgaa.ie/fixtures-results/team/gle
+ ann-uiseann/6547884c-ea64-5502-8472-8eb26b092437/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Killeshin v Colt Shanahoe today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-ladies-2026-09-08-5@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260908T183000
+DTEND;TZID=Europe/Dublin:20260908T200000
+SUMMARY:Killeshin v Ballyfin (Ladies U16)
+LOCATION:TBC
+DESCRIPTION:U16 B Championship - Round 6. Source: https://laoislgfa.ie/fi
+ xtures-results/team/killeshin/6063df22-0a35-9537-87e6-5276dfa17357/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Killeshin v Ballyfin today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-ladies-2026-09-10-6@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260910T183000
+DTEND;TZID=Europe/Dublin:20260910T200000
+SUMMARY:Killeshin v Ballyfin (Ladies U14)
+LOCATION:TBC
+DESCRIPTION:U14 B Championship Knockout - Shield Semi Final 2. Source: ht
+ tps://laoislgfa.ie/fixtures-results/team/killeshin/6063df22-0a35-9537-87
+ e6-5276dfa17357/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Killeshin v Ballyfin today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-men-2026-09-12-7@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260912T113000
+DTEND;TZID=Europe/Dublin:20260912T130000
+SUMMARY:Ballylinan v Killeshin (Men's U15)
+LOCATION:Ballylinan GAA Grounds
+DESCRIPTION:U15 Football "B" Championship - Cup Division 1 - Semi-final. 
+ Source: https://laoisgaa.ie/fixtures-results/team/gleann-uiseann/6547884
+ c-ea64-5502-8472-8eb26b092437/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Ballylinan v Killeshin today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-men-2026-09-12-8@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260912T190000
+DTEND;TZID=Europe/Dublin:20260912T203000
+SUMMARY:Portlaoise v Killeshin (Men's Senior)
+LOCATION:Laois Hire O'Moore Park\, Portlaoise
+DESCRIPTION:Senior Football Championship - Quarter-final. Referee: Cliffo
+ rd Ward. Source: https://laoisgaa.ie/fixtures-results/team/gleann-uisean
+ n/6547884c-ea64-5502-8472-8eb26b092437/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Portlaoise v Killeshin today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-men-2026-09-13-9@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260913T120000
+DTEND;TZID=Europe/Dublin:20260913T133000
+SUMMARY:The Rock GAA Club v Killeshin (Men's Junior)
+LOCATION:The Rock GAA
+DESCRIPTION:Junior Football Championship - Quarter-final. Source: https:/
+ /laoisgaa.ie/fixtures-results/team/gleann-uiseann/6547884c-ea64-5502-847
+ 2-8eb26b092437/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:The Rock GAA Club v Killeshin today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-men-2026-09-20-10@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20260920T113000
+DTEND;TZID=Europe/Dublin:20260920T130000
+SUMMARY:Killeshin v St Joseph's (Men's U17)
+LOCATION:Killeshin GAA Grounds
+DESCRIPTION:U17 Football "B" Championship - League Division 1 - Round 7. 
+ Source: https://laoisgaa.ie/fixtures-results/team/gleann-uiseann/6547884
+ c-ea64-5502-8472-8eb26b092437/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Killeshin v St Joseph's today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-men-2026-10-16-11@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20261016T193000
+DTEND;TZID=Europe/Dublin:20261016T210000
+SUMMARY:Stradbally Parish Gaels v Killeshin (Men's U20)
+LOCATION:TBC
+DESCRIPTION:Under 20 Football Championship - League Division 2 - Round 1.
+  Source: https://laoisgaa.ie/fixtures-results/team/gleann-uiseann/654788
+ 4c-ea64-5502-8472-8eb26b092437/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Stradbally Parish Gaels v Killeshin today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-men-2026-10-24-12@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20261024T190000
+DTEND;TZID=Europe/Dublin:20261024T203000
+SUMMARY:Killeshin v Portarlington (Men's U20)
+LOCATION:Killeshin GAA Grounds
+DESCRIPTION:Under 20 Football Championship - League Division 2 - Round 2.
+  Source: https://laoisgaa.ie/fixtures-results/team/gleann-uiseann/654788
+ 4c-ea64-5502-8472-8eb26b092437/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Killeshin v Portarlington today
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:killeshin-men-2026-11-06-13@killeshingaa
+DTSTAMP:20260903T221029Z
+DTSTART;TZID=Europe/Dublin:20261106T193000
+DTEND;TZID=Europe/Dublin:20261106T210000
+SUMMARY:Portlaoise v Killeshin (Men's U20)
+LOCATION:TBC
+DESCRIPTION:Under 20 Football Championship - League Division 2 - Round 3.
+  Source: https://laoisgaa.ie/fixtures-results/team/gleann-uiseann/654788
+ 4c-ea64-5502-8472-8eb26b092437/
+BEGIN:VALARM
+TRIGGER:-PT120M
+ACTION:DISPLAY
+DESCRIPTION:Portlaoise v Killeshin today
+END:VALARM
+END:VEVENT
+END:VCALENDAR
