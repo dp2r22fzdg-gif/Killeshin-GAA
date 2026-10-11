@@ -479,6 +479,9 @@
     var a = document.createElement('a');
     a.className = 'pbtn'; a.href = BOOKINGS; a.innerHTML = ICON.pitch + 'Pitch bookings';
     panel.appendChild(a);
+    var sc = document.createElement('a');
+    sc.className = 'pbtn'; sc.href = SCORER; sc.innerHTML = ICON.score + 'Live scorer';
+    panel.appendChild(sc);
   }
 
   function start(){
