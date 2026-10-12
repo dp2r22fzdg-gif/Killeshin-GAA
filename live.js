@@ -99,6 +99,7 @@
     '.lvd-sr u{text-decoration:none;font-family:"Bricolage Grotesque",Archivo,sans-serif;font-weight:800;font-size:19px;' +
       'color:#11492E;font-variant-numeric:tabular-nums;white-space:nowrap}' +
     '.lvd-note{font-size:12.5px;color:#6B7A72;margin:6px 0 0}' +
+    '.lvd-report{margin:0;font-size:14.5px;line-height:1.6;color:#101A14}' +
     '.lvd-ev{display:flex;align-items:flex-start;gap:11px;padding:9px 0;border-top:1px solid #EEF3EF;font-size:14.5px;line-height:1.4}' +
     '.lvd-ev:first-of-type{border-top:0}' +
     '.lvd-min{flex:none;width:44px;font-weight:800;color:#12703F;font-variant-numeric:tabular-nums;font-size:13.5px;padding-top:1px}' +
@@ -274,6 +275,59 @@
     return Object.keys(by).map(function (q) { return by[q]; })
       .sort(function (a, b) { return (b.g * 3 + b.p) - (a.g * 3 + a.p) || a.n.localeCompare(b.n); });
   }
+
+  function joinList(a) {
+    if (a.length <= 1) return a[0] || '';
+    return a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1];
+  }
+
+  /* A short, fact-only recap, built only from what the scorer actually
+     recorded: the final score, the half-time score, the top scorer's tally
+     and any cards. Nothing here is invented or guessed - it reads the same
+     events and log that the scorer list and timeline below it already show,
+     just turned into a couple of sentences. Only shown once a match is
+     actually at full time. */
+  function matchReport(m) {
+    var t = tally(m), opp = esc(m.opp || 'the opposition');
+    var us = t.kg * 3 + t.kp, them = t.og * 3 + t.op;
+    var ourScore = fmt(t.kg, t.kp), theirScore = fmt(t.og, t.op);
+    var lines = [];
+
+    if (us > them) lines.push('Killeshin beat ' + opp + ', ' + ourScore + ' to ' + theirScore + '.');
+    else if (us < them) lines.push(opp + ' beat Killeshin, ' + theirScore + ' to ' + ourScore + '.');
+    else lines.push('Killeshin drew with ' + opp + ', ' + ourScore + ' apiece.');
+
+    if (m.tht) {
+      var ht = scoreAt(m, m.tht);
+      var htUs = ht.kg * 3 + ht.kp, htThem = ht.og * 3 + ht.op;
+      lines.push('Half-time: ' + fmt(ht.kg, ht.kp) + ' to ' + fmt(ht.og, ht.op) + '.');
+      if (htUs !== htThem && us !== them) {
+        var ledAtHalf = htUs > htThem ? 'Killeshin' : opp;
+        var ledAtFull = us > them ? 'Killeshin' : opp;
+        if (ledAtHalf !== ledAtFull) lines.push(ledAtFull + ' trailed at the break but came out on top.');
+      }
+    }
+
+    var list = breakdown(m);
+    if (list.length) {
+      var top = list[0];
+      var extra = top.tp ? ', including ' + top.tp + ' two-' + (top.tp === 1 ? 'pointer' : 'pointers') : '';
+      lines.push(esc(top.n) + ' top-scored for Killeshin with ' + fmt(top.g, top.p) + extra + '.');
+    }
+
+    var ours = [], theirs = [], k, log = m.log || {};
+    for (k in log) {
+      var l = log[k]; if (!l || l.k !== 'card') continue;
+      var word = { y: 'a yellow card', b: 'a black card', r: 'a red card' }[l.c] || 'a card';
+      if (l.s === 'o') theirs.push(word + (l.n ? ' for ' + esc(l.n) : ''));
+      else ours.push(word + (l.n ? ' for ' + esc(l.n) : ''));
+    }
+    if (ours.length) lines.push('Killeshin picked up ' + joinList(ours) + '.');
+    if (theirs.length) lines.push(opp + ' picked up ' + joinList(theirs) + '.');
+
+    return lines.join(' ');
+  }
+
   function detail(m) {
     var t = tally(m), s = state(m), opp = m.opp || 'Opposition', away = m.venue === 'away';
     var us = side(club(m), t.kg, t.kp, away, ourCrest(m)), them = side(opp, t.og, t.op, !away, theirCrest(opp));
@@ -282,6 +336,11 @@
       (s.on || s.d ? '' : 'background:rgba(255,255,255,.18);color:#fff;border:0') + '">' + (s.on ? '<i></i>' : '') + esc(s.t) + '</span>' +
       '<span class="lv-comp">' + info + '</span><button class="lvd-x" data-close aria-label="Close">\u00d7</button></div>' +
       '<div class="lv-row">' + (away ? them + us : us + them) + '</div></div>';
+
+    if (m.status === 'ft') {
+      var rep = matchReport(m);
+      if (rep) h += '<div class="lvd-sec"><h4>Match report</h4><p class="lvd-report">' + rep + '</p></div>';
+    }
 
     var list = breakdown(m);
     var unnamed = 0, ev = m.events || {}, k;
@@ -451,19 +510,30 @@
      grade, opposition). Each result card on the Results tab is matched to
      one of those by the same four things, and gets a Match stats button that
      opens the full details. No change to the rest of the site is needed. */
-  var STATS_OPEN = '__stats', statsMatch = null, STATS = {}, statsIdx = {};
+  var STATS_OPEN = '__stats', statsMatch = null, STATS = {}, statsIdx = {}, statsIdxLoose = {};
   var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var DAY = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   function longDate(s) { var p = String(s).split('-'), x = new Date(+p[0], p[1] - 1, +p[2]); return DAY[x.getDay()] + ' ' + x.getDate() + ' ' + MON[x.getMonth()]; }
   function statsKey(day, branch, grade, opp) { return [day, branch, String(grade).trim(), looseKey(opp)].join('|'); }
+  /* A fallback that drops the grade from the key. Used only when the exact
+     key misses - a scorer might type a grade slightly differently from how
+     the county board publishes it (e.g. "Minor" vs "Minor B"), and date +
+     branch + opponent is almost always enough on its own. If two different
+     matches ever do share the same date, branch and opponent, this is
+     marked null rather than guessing, so a mismatch never shows the wrong
+     match's stats in place of none at all. */
+  function looseStatsKey(day, branch, opp) { return [day, branch, looseKey(opp)].join('|'); }
   function loadStats() {
     fetch(DB + '/live/stats.json?t=' + Date.now(), { cache: 'no-store' })
       .then(function (r) { if (!r.ok) throw 0; return r.json(); })
       .then(function (j) {
-        STATS = j || {}; statsIdx = {};
+        STATS = j || {}; statsIdx = {}; statsIdxLoose = {};
         Object.keys(STATS).forEach(function (id) {
           var l = STATS[id] && STATS[id].link; if (!l) return;
-          statsIdx[statsKey(longDate(l.date), l.branch, l.grade, l.opp)] = id;
+          var day = longDate(l.date);
+          statsIdx[statsKey(day, l.branch, l.grade, l.opp)] = id;
+          var lk = looseStatsKey(day, l.branch, l.opp);
+          statsIdxLoose[lk] = (lk in statsIdxLoose && statsIdxLoose[lk] !== id) ? null : id;
         });
         addStatsButtons();
       })
@@ -481,7 +551,9 @@
       var names = Array.prototype.map.call(card.querySelectorAll('.sl .n > span:not(.mini)'), function (x) { return x.textContent.trim(); });
       var opp = names.filter(function (n) { return n !== 'Killeshin'; })[0];
       if (!opp) return;
-      var id = statsIdx[statsKey(dh.textContent.trim(), card.classList.contains('lad') ? 'ladies' : 'men', gr.textContent, opp)];
+      var day = dh.textContent.trim(), branch = card.classList.contains('lad') ? 'ladies' : 'men';
+      var id = statsIdx[statsKey(day, branch, gr.textContent, opp)];
+      if (!id) id = statsIdxLoose[looseStatsKey(day, branch, opp)];
       if (!id) return;
       var b = document.createElement('button');
       b.className = 'lv-statsbtn'; b.type = 'button'; b.setAttribute('data-stats', id);
