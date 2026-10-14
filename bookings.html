@@ -232,7 +232,7 @@ h2{font-size:28px;margin:20px 2px 4px}
 .day.cal{display:grid;place-items:center;background:#fff;border:1.5px dashed var(--line-dk)}
 .day.cal svg{width:22px;height:22px;stroke:var(--green-dk);stroke-width:1.9;fill:none}
 .vh{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
-.tsel{margin-top:2px}
+.tsel{margin-top:0}
 .tsel label{margin-bottom:0}
 .panel.mapcard{padding:10px}
 .panel.mapcard .legend{padding:0 4px}
@@ -248,12 +248,12 @@ h2{font-size:28px;margin:20px 2px 4px}
 #v-book:not(.on) ~ .sumbar,body.embed .sumbar{display:none}
 #v-book{padding-bottom:80px}
 #b-go{display:none}
-.setupnote{display:flex;gap:10px;align-items:flex-start;margin:12px 0 4px;padding:11px 12px;border-radius:13px;background:#FFFBEA;border:1px solid rgba(184,125,18,.35);font-size:13px;line-height:1.45;color:#5C4210}
+.setupnote{display:flex;gap:10px;align-items:flex-start;margin:14px 0 0;padding:11px 12px;border-radius:13px;background:#FFFBEA;border:1px solid rgba(184,125,18,.35);font-size:13px;line-height:1.45;color:#5C4210}
 .setupnote svg{width:20px;height:20px;flex:none;stroke:var(--amber);stroke-width:2;fill:none;stroke-linecap:round;margin-top:1px}
 .setupnote b{display:block;color:#4A340B}
-.daybar{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:14px 2px 8px;font-size:12px;font-weight:700;color:var(--grey)}
+.daybar{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:2px 2px 8px;font-size:12px;font-weight:700;color:var(--grey)}
 .daybar b{font-family:var(--dsp);font-weight:800;font-size:16px;color:var(--ink);text-align:right}
-.mseg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:2px;padding:4px;border-radius:14px;background:var(--paper-2)}
+.mseg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:14px;padding:4px;border-radius:14px;background:var(--paper-2)}
 .mseg button{padding:11px 6px;border-radius:11px;font-size:14px;font-weight:700;color:var(--grey);background:transparent}
 .mseg button.on{background:#fff;color:var(--green-dk);box-shadow:0 2px 8px rgba(17,73,46,.15)}
 .blockbox{margin-top:10px;padding:12px;border-radius:16px;background:linear-gradient(160deg,#F4FBF7,#E8F6EE);border:1px solid rgba(31,130,74,.25)}
@@ -274,6 +274,24 @@ h2{font-size:28px;margin:20px 2px 4px}
 .panel.mapcard .quick{gap:7px;margin-top:10px}
 .panel.mapcard .quick .pill{font-size:12.5px;padding:6px 11px;border-radius:9px}
 #b-selnote{display:none}
+.stick{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;margin:0 -10px 10px;padding:8px 10px 8px;background:#fff;
+  border-bottom:1px solid var(--line);box-shadow:0 8px 14px -10px rgba(17,73,46,.4)}
+.stick .daybar{margin:0 2px 6px}
+.stick .daybar b{font-size:15px}
+.stick .days{margin:0 -10px;padding-top:2px;padding-bottom:6px}
+.stick .day{padding:6px 0 6px}
+.stick .day b{font-size:19px}
+.stick .tsel{margin-top:2px;gap:10px}
+.stick .tsel label{font-size:10.5px}
+.stick .tsel select{padding:9px 12px;font-size:15px}
+.panel.mapcard .mtop{margin:10px 0 0;padding:12px;border-radius:16px;background:linear-gradient(160deg,#F7FBF8,#EAF5EE);border:1px solid rgba(31,130,74,.18)}
+.panel.mapcard .mtop .qhead{margin:0 0 8px}
+.panel.mapcard .mtop .quick{margin:0;padding:0}
+.panel.mapcard .mtop .legend{margin:12px 0 0;padding:12px 0 0;border-top:1px dashed #C4D9CB;gap:6px}
+.panel.mapcard .mtop .legend span{display:inline-flex;align-items:center;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px 10px 3px 8px;font-size:11.5px;font-weight:600;color:var(--ink)}
+.panel.mapcard .mtop .legend i{margin-right:6px;vertical-align:0}
+.panel.mapcard .mtop .gapnote{display:flex;align-items:center;gap:8px;margin:12px 0 0;padding:9px 11px;border-radius:12px;background:#FFFBEA;border:1px solid rgba(184,125,18,.35);font-size:12.5px;font-weight:700;line-height:1.4;color:#5C4210}
+.panel.mapcard .mtop .gapnote svg{width:18px;height:18px;flex:none;stroke:var(--amber);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .mast{position:relative;padding-top:calc(50px + env(safe-area-inset-top))}
 .backsite{position:absolute;top:calc(10px + env(safe-area-inset-top));left:18px;font-size:12.5px;font-weight:700;color:#BFE9D0;text-decoration:none;
   padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18)}
@@ -321,16 +339,36 @@ body.embed main{padding:4px}
   </div>
   <p class="sub" id="b-kind-help" style="margin-top:-2px">Pick a time, then tap the side you need. Both sides of a pitch gives you the whole pitch.</p>
   <p class="sub" id="b-kind-note" hidden style="margin-top:-2px">Pick a time, then tap the pitch you want: Old, Juvenile or Senior. Practice matches book a whole pitch. Official fixtures still take priority.</p>
-  <div class="step"><span class="n">2</span><b>When?</b></div>
-  <div class="panel when">
+  <div class="step"><span class="n">2</span><b>Day, time and pitch</b><em id="b-where-hint">Slide the days, tap a side</em></div>
+  <div class="panel mapcard">
+    <div class="stick">
+    <div class="daybar"><span id="b-timelbl"></span><b id="b-daylbl"></b></div>
+    <div class="days" id="b-days"></div>
+    <input type="date" id="b-date" class="vh" aria-label="Pick another date">
     <div class="row tsel">
       <label>From<select id="b-start"></select></label>
       <label>For<select id="b-dur">
         <option value="60">1 hour</option><option value="90" selected>1½ hours</option><option value="120">2 hours</option>
       </select></label>
     </div>
-    <div class="setupnote"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
-      <span><b>Set-up and pack-away are within your booking time.</b> Please allow time to put out and clear away goals, cones and equipment inside your slot.</span></div>
+    </div>
+    <div class="mapwrap" id="map-book"></div>
+    <div class="mtop">
+      <div class="qhead">Select a full pitch</div>
+      <div class="quick" id="b-quick"></div>
+    <div class="legend">
+      <span><i style="background:rgba(255,255,255,.2);outline:2px solid var(--forest);outline-offset:-2px"></i>Free</span>
+      <span><i style="background:var(--green);outline:2px solid #fff;outline-offset:-3px"></i>Your pick</span>
+      <span><i style="background:repeating-linear-gradient(45deg,#4E5A53 0 3px,#C2D0C7 3px 6px)"></i>Training on</span>
+      <span><i style="background:var(--amber)"></i>Match on</span>
+      <span><i style="background:#6B4E26"></i>Matches only</span>
+    </div>
+      <div class="gapnote"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>30 minutes is kept clear before and after every match.</span></div>
+    </div>
+    <div class="selnote" id="b-selnote">Nothing picked yet.</div>
+  </div>
+  <div class="step"><span class="n">3</span><b>How often?</b></div>
+  <div class="panel when">
     <div class="mseg" id="b-mode" role="tablist" aria-label="Single session or block booking">
       <button class="on" data-m="single" type="button">Single session</button><button data-m="block" type="button">Block booking</button>
     </div>
@@ -341,24 +379,9 @@ body.embed main{padding:4px}
       </div>
       <div class="bsum" id="b-block-sum"></div>
     </div>
-    <div class="daybar"><span>Slide to pick the day</span><b id="b-daylbl"></b></div>
-    <div class="days" id="b-days"></div>
-    <input type="date" id="b-date" class="vh" aria-label="Pick another date">
-  </div>
-  <div class="step"><span class="n">3</span><b>Where?</b><em id="b-where-hint">Tap a side on the map</em></div>
-  <div class="panel mapcard">
-    <div class="mapwrap" id="map-book"></div>
-    <div class="legend">
-      <span><i style="background:rgba(255,255,255,.2);outline:2px solid var(--forest);outline-offset:-2px"></i>Free</span>
-      <span><i style="background:var(--green);outline:2px solid #fff;outline-offset:-3px"></i>Your pick</span>
-      <span><i style="background:repeating-linear-gradient(45deg,#4E5A53 0 3px,#C2D0C7 3px 6px)"></i>Training on</span>
-      <span><i style="background:var(--amber)"></i>Match on</span>
-      <span><i style="background:#6B4E26"></i>Matches only</span>
-    </div>
-    <p class="gapnote">30 minutes is kept clear before and after every match.</p>
-    <div class="qhead">Select a full pitch</div>
-    <div class="quick" id="b-quick"></div>
-    <div class="selnote" id="b-selnote">Nothing picked yet.</div>
+    <div class="setupnote"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+      <span><b>Set-up and pack-away are within your booking time.</b></span></div>
+
   </div>
   <div class="step"><span class="n">4</span><b>Your details</b></div>
   <div class="panel">
@@ -468,7 +491,7 @@ body.embed main{padding:4px}
   </div>
 </section>
 
-<p class="demo">Version 14 Oct · 22<br><a href="/" style="color:var(--green-dk);font-weight:700;text-decoration:none">Back to killeshingaa.ie</a></p>
+<p class="demo">Version 14 Oct · 28<br><a href="/" style="color:var(--green-dk);font-weight:700;text-decoration:none">Back to killeshingaa.ie</a></p>
 </main>
 
 <nav class="bar" id="tabs" aria-label="Sections"><div class="in">
@@ -881,7 +904,8 @@ function updateSummary(){
   $('b-sum-what').textContent = picked ? describeHalves([...bookSel]) : (PRACTICE?'Pick a pitch on the map':'Pick a side on the map');
   $('b-sum-when').textContent = niceDate(d)+' · '+s+'–'+e+(PRACTICE?' · Practice match':'')+(BLOCK?' · '+blockDates().length+' weeks':'');
   $('b-sum').classList.toggle('empty',!picked);
-  $('b-where-hint').textContent = PRACTICE?'Tap a pitch on the map':'Tap a side on the map';
+  if($('b-timelbl')) $('b-timelbl').textContent=s+'–'+e;
+  $('b-where-hint').textContent = PRACTICE?'Slide the days, tap a pitch':'Slide the days, tap a side';
 }
 new MutationObserver(()=>{ updateSummary(); blockPreview(); }).observe($('b-selnote'),{childList:true,characterData:true,subtree:true});
 ['b-start','b-dur'].forEach(id=>$(id).addEventListener('change',()=>{ updateSummary(); updateBlockUI(); blockPreview(); }));
