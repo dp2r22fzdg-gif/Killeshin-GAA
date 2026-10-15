@@ -237,22 +237,9 @@ h2{font-size:28px;margin:20px 2px 4px}
 .panel.mapcard{padding:10px}
 .panel.mapcard .legend{padding:0 4px}
 .panel.mapcard .quick,.panel.mapcard .selnote{padding:0 4px}
-.sumbar{position:fixed;left:0;right:0;bottom:calc(62px + env(safe-area-inset-bottom));z-index:55;display:flex;align-items:center;gap:12px;
-  max-width:600px;margin:0 auto;padding:10px 12px 10px 16px;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  border-top:1px solid var(--line);box-shadow:0 -8px 24px -12px rgba(17,73,46,.35)}
-.sumbar .st{flex:1;min-width:0}
-.sumbar .st b{display:block;font-size:14.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sumbar .st span{display:block;font-size:12.5px;color:var(--grey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sumbar .btn{padding:12px 26px;font-size:15px;letter-spacing:.06em}
-.sumbar.empty .btn{opacity:.45}
-#v-book:not(.on) ~ .sumbar,body.embed .sumbar{display:none}
-#v-book{padding-bottom:80px}
-#b-go{display:none}
 .setupnote{display:flex;gap:10px;align-items:flex-start;margin:14px 0 0;padding:11px 12px;border-radius:13px;background:#FFFBEA;border:1px solid rgba(184,125,18,.35);font-size:13px;line-height:1.45;color:#5C4210}
 .setupnote svg{width:20px;height:20px;flex:none;stroke:var(--amber);stroke-width:2;fill:none;stroke-linecap:round;margin-top:1px}
 .setupnote b{display:block;color:#4A340B}
-.daybar{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:2px 2px 8px;font-size:12px;font-weight:700;color:var(--grey)}
-.daybar b{font-family:var(--dsp);font-weight:800;font-size:16px;color:var(--ink);text-align:right}
 .mseg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:14px;padding:4px;border-radius:14px;background:var(--paper-2)}
 .mseg button{padding:11px 6px;border-radius:11px;font-size:14px;font-weight:700;color:var(--grey);background:transparent}
 .mseg button.on{background:#fff;color:var(--green-dk);box-shadow:0 2px 8px rgba(17,73,46,.15)}
@@ -274,16 +261,22 @@ h2{font-size:28px;margin:20px 2px 4px}
 .panel.mapcard .quick{gap:7px;margin-top:10px}
 .panel.mapcard .quick .pill{font-size:12.5px;padding:6px 11px;border-radius:9px}
 #b-selnote{display:none}
-.stick{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;margin:0 -10px 10px;padding:8px 10px 8px;background:#fff;
-  border-bottom:1px solid var(--line);box-shadow:0 8px 14px -10px rgba(17,73,46,.4)}
-.stick .daybar{margin:0 2px 6px}
-.stick .daybar b{font-size:15px}
-.stick .days{margin:0 -10px;padding-top:2px;padding-bottom:6px}
-.stick .day{padding:6px 0 6px}
+.mapstick .mapwrap{width:min(100%,calc((100vh - 300px)*.8));margin-left:auto;margin-right:auto}
+.stick{margin:10px -10px 0;padding:10px 10px 6px;background:#fff;border-top:1px solid var(--line)}
+.stick .tsel{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 8px}
+.stick .tsel label{display:flex;align-items:center;gap:8px;margin:0;font-size:10.5px}
+.stick .tsel select{flex:1;min-width:0;margin:0;padding:8px 10px;font-size:15px}
+.stick .daybar{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 6px}
+.stick .daybar b{flex:1;text-align:center;font-family:var(--dsp);font-weight:800;font-size:15px}
+.dstep{width:42px;height:36px;border-radius:11px;font-size:22px;font-weight:800;line-height:1;color:var(--green-dk);background:var(--green-lt);border:1.5px solid #BFDFCD;box-shadow:0 2px 0 #BFDFCD}
+.dstep:active{box-shadow:none;transform:translateY(2px)}
+.stick .days{margin:0 -10px;padding-top:2px;padding-bottom:4px}
+.stick .day{padding:6px 0}
 .stick .day b{font-size:19px}
-.stick .tsel{margin-top:2px;gap:10px}
-.stick .tsel label{font-size:10.5px}
-.stick .tsel select{padding:9px 12px;font-size:15px}
+.sumcard{margin:14px 0 12px;padding:12px 14px;border-radius:14px;background:var(--green-lt);border:1px solid #BFDFCD}
+.sumcard b{display:block;font-size:15px;font-weight:800}
+.sumcard span{display:block;font-size:13px;color:var(--grey);margin-top:2px}
+.sumcard.empty{background:var(--paper-2);border-color:var(--line)}
 .panel.mapcard .mtop{margin:10px 0 0;padding:12px;border-radius:16px;background:linear-gradient(160deg,#F7FBF8,#EAF5EE);border:1px solid rgba(31,130,74,.18)}
 .panel.mapcard .mtop .qhead{margin:0 0 8px}
 .panel.mapcard .mtop .quick{margin:0;padding:0}
@@ -341,18 +334,20 @@ body.embed main{padding:4px}
   <p class="sub" id="b-kind-note" hidden style="margin-top:-2px">Pick a time, then tap the pitch you want: Old, Juvenile or Senior. Practice matches book a whole pitch. Official fixtures still take priority.</p>
   <div class="step"><span class="n">2</span><b>Day, time and pitch</b><em id="b-where-hint">Slide the days, tap a side</em></div>
   <div class="panel mapcard">
+    <div class="mapstick">
+    <div class="mapwrap" id="map-book"></div>
     <div class="stick">
-    <div class="daybar"><span id="b-timelbl"></span><b id="b-daylbl"></b></div>
-    <div class="days" id="b-days"></div>
-    <input type="date" id="b-date" class="vh" aria-label="Pick another date">
     <div class="row tsel">
       <label>From<select id="b-start"></select></label>
       <label>For<select id="b-dur">
         <option value="60">1 hour</option><option value="90" selected>1½ hours</option><option value="120">2 hours</option>
       </select></label>
     </div>
+      <div class="daybar"><button type="button" class="dstep" data-s="-1" aria-label="Previous day">&#8249;</button><b id="b-daylbl"></b><button type="button" class="dstep" data-s="1" aria-label="Next day">&#8250;</button></div>
+      <div class="days" id="b-days"></div>
+    <input type="date" id="b-date" class="vh" aria-label="Pick another date">
     </div>
-    <div class="mapwrap" id="map-book"></div>
+    </div>
     <div class="mtop">
       <div class="qhead">Select a full pitch</div>
       <div class="quick" id="b-quick"></div>
@@ -395,12 +390,9 @@ body.embed main{padding:4px}
     </div>
     <p class="sub" style="margin:0 0 12px">Your confirmation and any changes are emailed to you. Your number and email are never shown publicly. This phone remembers your details for next time. <a href="#" id="forget-me" style="color:var(--green-dk);font-weight:700">Not you? Clear saved details</a></p>
     <label id="b-code-wrap" hidden>Club booking code<input id="b-code" autocomplete="off" autocapitalize="none" placeholder="From the coaches' WhatsApp group"></label>
+    <div class="sumcard empty" id="b-sum"><b id="b-sum-what">Pick a side on the map</b><span id="b-sum-when"></span></div>
     <button class="btn block" id="b-go">BOOK</button>
     <div id="b-result"></div>
-  </div>
-  <div class="sumbar" id="b-sum">
-    <div class="st"><b id="b-sum-what">Pick a side on the map</b><span id="b-sum-when"></span></div>
-    <button class="btn" id="b-sum-go">BOOK</button>
   </div>
 </section>
 
@@ -491,7 +483,7 @@ body.embed main{padding:4px}
   </div>
 </section>
 
-<p class="demo">Version 14 Oct · 28<br><a href="/" style="color:var(--green-dk);font-weight:700;text-decoration:none">Back to killeshingaa.ie</a></p>
+<p class="demo">Version 15 Oct · 31<br><a href="/" style="color:var(--green-dk);font-weight:700;text-decoration:none">Back to killeshingaa.ie</a></p>
 </main>
 
 <nav class="bar" id="tabs" aria-label="Sections"><div class="in">
@@ -835,6 +827,12 @@ $('b-days').addEventListener('click',e=>{
   if(b.id==='b-cal'){ const inp=$('b-date'); try{ inp.showPicker(); }catch(err){ inp.focus(); inp.click(); } return; }
   selectDay(b.dataset.d,true);
 });
+document.querySelector('.stick .daybar').addEventListener('click',e=>{
+  const b=e.target.closest('.dstep'); if(!b) return;
+  const next=addDays($('b-date').value, +b.dataset.s);
+  if(next<today()) return;
+  selectDay(next,true);
+});
 $('b-days').addEventListener('scroll',()=>{
   if(progScroll) return;
   cancelAnimationFrame(rafId);
@@ -909,10 +907,8 @@ function updateSummary(){
 }
 new MutationObserver(()=>{ updateSummary(); blockPreview(); }).observe($('b-selnote'),{childList:true,characterData:true,subtree:true});
 ['b-start','b-dur'].forEach(id=>$(id).addEventListener('change',()=>{ updateSummary(); updateBlockUI(); blockPreview(); }));
-$('b-sum-go').addEventListener('click',()=>{
-  $('b-go').click();
-  setTimeout(()=>{ const r=$('b-result'); if(r && r.innerHTML.trim()) r.scrollIntoView({behavior:'smooth',block:'center'}); },60);
-});
+function setBarH(){ const bar=document.querySelector('.bar'); if(bar) document.documentElement.style.setProperty('--barh', bar.getBoundingClientRect().height+'px'); }
+setBarH(); window.addEventListener('resize',setBarH);
 buildDays(); updateSummary(); updateBlockUI(); prefetchDays();
 setInterval(()=>{ if($('v-book').classList.contains('on')) prefetchDays(); }, 60000);
 
