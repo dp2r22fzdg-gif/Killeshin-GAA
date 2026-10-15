@@ -483,7 +483,7 @@ body.embed main{padding:4px}
   </div>
 </section>
 
-<p class="demo">Version 15 Oct · 31<br><a href="/" style="color:var(--green-dk);font-weight:700;text-decoration:none">Back to killeshingaa.ie</a></p>
+<p class="demo">Version 15 Oct · 32<br><a href="/" style="color:var(--green-dk);font-weight:700;text-decoration:none">Back to killeshingaa.ie</a></p>
 </main>
 
 <nav class="bar" id="tabs" aria-label="Sections"><div class="in">
@@ -909,6 +909,28 @@ new MutationObserver(()=>{ updateSummary(); blockPreview(); }).observe($('b-seln
 ['b-start','b-dur'].forEach(id=>$(id).addEventListener('change',()=>{ updateSummary(); updateBlockUI(); blockPreview(); }));
 function setBarH(){ const bar=document.querySelector('.bar'); if(bar) document.documentElement.style.setProperty('--barh', bar.getBoundingClientRect().height+'px'); }
 setBarH(); window.addEventListener('resize',setBarH);
+
+/* Scroll stop: scrolling down the page halts when the day slider reaches the bottom of the
+   screen (map and slider both in view). Another swipe carries on past it. */
+(function(){
+  let held=false, armed=true, lastY=window.scrollY;
+  const bookOn=()=>$('v-book').classList.contains('on');
+  function stopY(){
+    const st=document.querySelector('.stick'), bar=document.querySelector('.bar');
+    if(!st||!bar) return null;
+    return Math.round(window.scrollY + st.getBoundingClientRect().bottom - (bar.getBoundingClientRect().top - 6));
+  }
+  window.addEventListener('touchstart',()=>{ if(held){ held=false; armed=false; } },{passive:true});   // a new swipe releases the stop
+  window.addEventListener('scroll',()=>{
+    if(!bookOn()){ lastY=window.scrollY; return; }
+    const y=window.scrollY, t=stopY();
+    if(t==null||t<=0){ lastY=y; return; }
+    if(y < t-60){ armed=true; held=false; }                                     // back above it: ready to stop again
+    else if(armed && lastY<=t && y>t){ held=true; armed=false; window.scrollTo(0,t); }
+    else if(held && y>t){ window.scrollTo(0,t); }
+    lastY=window.scrollY;
+  },{passive:true});
+})();
 buildDays(); updateSummary(); updateBlockUI(); prefetchDays();
 setInterval(()=>{ if($('v-book').classList.contains('on')) prefetchDays(); }, 60000);
 
