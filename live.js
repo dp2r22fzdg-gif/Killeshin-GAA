@@ -406,7 +406,7 @@
       sheet.setAttribute('aria-label', 'Match details');
       sheet.innerHTML = '<div class="lvd-panel"></div>';
       sheet.addEventListener('click', function (ev) {
-        if (ev.target.closest('[data-share]')) { shareMatch(openId === STATS_OPEN ? statsMatch : matches[openId]); return; }
+        if (ev.target.closest('[data-share]')) { var isStats = openId === STATS_OPEN; shareMatch(isStats ? statsMatch : matches[openId], isStats); return; }
         if (ev.target === sheet || ev.target.closest('[data-close]')) closeSheet();
       });
       document.body.appendChild(sheet);
@@ -416,17 +416,52 @@
   }
   /* A short, accurate summary of the match as it stands right now, handed to
      the device's own share sheet - Messages, WhatsApp, whatever the person
-     picks. Falls back to copying the text if the Share API isn't there. */
-  function shareMatch(m) {
+     picks. Falls back to copying the text if the Share API isn't there.
+
+     The link itself encodes which match it is - #stats=<id> for a finished
+     match's stats, #live=<id> for one still being played - so whoever taps
+     it lands straight on that match, not just the plain homepage. A live
+     match's id stops meaning anything once the game drops off the site, so
+     that kind of link is only good for as long as the match stays up; a
+     stats link is good indefinitely, since results are never removed. */
+  function shareMatch(m, isStats) {
     var text = lineScore(m, tally(m)) + ' \u00b7 ' + state(m).t;
+    var id = isStats ? statsId : openId;
+    var url = location.origin + location.pathname + (id ? '#' + (isStats ? 'stats' : 'live') + '=' + encodeURIComponent(id) : '');
     if (navigator.share) {
-      navigator.share({ title: 'Killeshin GAA', text: text, url: location.href }).catch(function () {});
+      navigator.share({ title: 'Killeshin GAA', text: text, url: url }).catch(function () {});
     } else if (navigator.clipboard) {
-      navigator.clipboard.writeText(text + ' - ' + location.href).catch(function () {});
+      navigator.clipboard.writeText(text + ' - ' + url).catch(function () {});
+    }
+  }
+  /* Opens the right sheet for whoever arrives via one of those links. Only
+     ever acts once - after that the link is cleared from the address bar,
+     so it can't keep re-opening the sheet every time the page quietly
+     refreshes itself in the background. */
+  var hashDone = false;
+  function tryOpenFromHash() {
+    if (hashDone) return;
+    var h = location.hash;
+    var m1 = /^#stats=(.+)$/.exec(h);
+    if (m1) {
+      var sid = decodeURIComponent(m1[1]);
+      if (STATS[sid]) {
+        hashDone = true; statsMatch = STATS[sid]; statsId = sid; openId = STATS_OPEN; renderSheet();
+        history.replaceState(null, '', location.pathname + location.search);
+      }
+      return;
+    }
+    var m2 = /^#live=(.+)$/.exec(h);
+    if (m2) {
+      var lid = decodeURIComponent(m2[1]);
+      if (matches[lid]) {
+        hashDone = true; openId = lid; renderSheet();
+        history.replaceState(null, '', location.pathname + location.search);
+      }
     }
   }
   function closeSheet() {
-    openId = null; statsMatch = null;
+    openId = null; statsMatch = null; statsId = null;
     if (sheet) { sheet.remove(); sheet = null; }
     document.documentElement.style.overflow = '';
   }
@@ -498,7 +533,7 @@
   function pull() {
     fetch(DB + '/live/matches.json?t=' + Date.now(), { cache: 'no-store' })
       .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-      .then(function (j) { matches = j || {}; render(); })
+      .then(function (j) { matches = j || {}; render(); tryOpenFromHash(); })
       .catch(function () { render(); /* keep the last score, but keep the clock moving */ });
   }
 
@@ -525,7 +560,7 @@
      grade, opposition). Each result card on the Results tab is matched to
      one of those by the same four things, and gets a Match stats button that
      opens the full details. No change to the rest of the site is needed. */
-  var STATS_OPEN = '__stats', statsMatch = null, STATS = {}, statsIdx = {}, statsIdxLoose = {};
+  var STATS_OPEN = '__stats', statsMatch = null, statsId = null, STATS = {}, statsIdx = {}, statsIdxLoose = {};
   var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var DAY = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   function longDate(s) { var p = String(s).split('-'), x = new Date(+p[0], p[1] - 1, +p[2]); return DAY[x.getDay()] + ' ' + x.getDate() + ' ' + MON[x.getMonth()]; }
@@ -551,6 +586,7 @@
           statsIdxLoose[lk] = (lk in statsIdxLoose && statsIdxLoose[lk] !== id) ? null : id;
         });
         addStatsButtons();
+        tryOpenFromHash();
       })
       .catch(function () { /* no buttons this time */ });
   }
@@ -578,8 +614,8 @@
   }
   document.addEventListener('click', function (ev) {
     var b = ev.target.closest && ev.target.closest('.lv-statsbtn'); if (!b) return;
-    var m = STATS[b.getAttribute('data-stats')]; if (!m) return;
-    statsMatch = m; openId = STATS_OPEN; renderSheet();
+    var id = b.getAttribute('data-stats'), m = STATS[id]; if (!m) return;
+    statsMatch = m; statsId = id; openId = STATS_OPEN; renderSheet();
   });
   (function watchResults() {
     var out = document.getElementById('out');
