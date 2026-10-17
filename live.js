@@ -12,9 +12,9 @@
   var DB = (C.dbUrl || '').replace(/\/$/, '');
   if (!DB || DB.indexOf('YOUR-') > -1) return;
 
-  var AFTER_FT = 5 * 60000;          /* how long the final score stays up */
+  var AFTER_FT = 15 * 60000;         /* how long the final score stays up */
   var TOO_OLD = 12 * 3600000;        /* forgotten matches never linger */
-  var PULL_EVERY = 15000;            /* fetch new scores from the scorer */
+  var PULL_EVERY = 5000;             /* fetch new scores from the scorer */
   var TICK_EVERY = 10000;            /* move the match clock on screen */
   var matches = {}, box = null;
 
@@ -89,6 +89,9 @@
     '.lvd-bar{display:flex;align-items:center;gap:10px;margin-bottom:12px}' +
     '.lvd-bar .lv-comp{color:#A9CFBB}' +
     '.lvd-x{flex:none;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:20px;line-height:1;cursor:pointer}' +
+    '.lvd-share{flex:none;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.14);' +
+      'color:#fff;font:800 12.5px Archivo,-apple-system,"Helvetica Neue",Arial,sans-serif;cursor:pointer}' +
+    '.lvd-share:active{background:rgba(255,255,255,.26)}' +
     '.lvd-board .lv-n{color:#fff}.lvd-board .lv-s{color:#fff}.lvd-board .lv-s small{color:#8FD6AE}' +
     '.lvd-board .lv-c{box-shadow:0 0 0 2px rgba(58,205,119,.55)}' +
     '.lvd-sec{padding:16px 18px 4px}' +
@@ -334,7 +337,7 @@
     var info = [m.team, m.comp].filter(Boolean).map(esc).join(' \u00b7 ');
     var h = '<div class="lvd-board"><div class="lvd-bar"><span class="lv-pill' + (s.d ? ' delay' : s.on ? '' : ' idle') + '" style="' +
       (s.on || s.d ? '' : 'background:rgba(255,255,255,.18);color:#fff;border:0') + '">' + (s.on ? '<i></i>' : '') + esc(s.t) + '</span>' +
-      '<span class="lv-comp">' + info + '</span><button class="lvd-x" data-close aria-label="Close">\u00d7</button></div>' +
+      '<span class="lv-comp">' + info + '</span><button class="lvd-share" data-share aria-label="Share">Share</button>' + '<button class="lvd-x" data-close aria-label="Close">\u00d7</button></div>' +
       '<div class="lv-row">' + (away ? them + us : us + them) + '</div></div>';
 
     if (m.status === 'ft') {
@@ -403,12 +406,24 @@
       sheet.setAttribute('aria-label', 'Match details');
       sheet.innerHTML = '<div class="lvd-panel"></div>';
       sheet.addEventListener('click', function (ev) {
+        if (ev.target.closest('[data-share]')) { shareMatch(openId === STATS_OPEN ? statsMatch : matches[openId]); return; }
         if (ev.target === sheet || ev.target.closest('[data-close]')) closeSheet();
       });
       document.body.appendChild(sheet);
       document.documentElement.style.overflow = 'hidden';
     }
     sheet.firstChild.innerHTML = detail(m);                   /* the panel stays put, so its scroll position does too */
+  }
+  /* A short, accurate summary of the match as it stands right now, handed to
+     the device's own share sheet - Messages, WhatsApp, whatever the person
+     picks. Falls back to copying the text if the Share API isn't there. */
+  function shareMatch(m) {
+    var text = lineScore(m, tally(m)) + ' \u00b7 ' + state(m).t;
+    if (navigator.share) {
+      navigator.share({ title: 'Killeshin GAA', text: text, url: location.href }).catch(function () {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(text + ' - ' + location.href).catch(function () {});
+    }
   }
   function closeSheet() {
     openId = null; statsMatch = null;

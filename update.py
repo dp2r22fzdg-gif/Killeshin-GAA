@@ -555,6 +555,9 @@ CLUB_LINKS = [
     {"group": "Follow the club", "mark": "L", "title": "Laois LGFA",
      "note": "County board \u2014 ladies fixtures and results",
      "url": "https://laoislgfa.ie/"},
+    {"group": "Club tools", "mark": "P", "title": "Book a pitch",
+     "note": "Training and match slots across the grounds",
+     "url": "https://www.killeshingaa.ie/bookings.html?ref=KG43077"},
 ]
 
 # Grades to leave off the filter chips. Go Games have no scores published,
@@ -565,7 +568,7 @@ HIDE_GRADES = ["U12"]
 # part of the year at the end.
 GRADE_ORDER = ["Senior", "Intermediate", "Junior A", "Junior C", "U20", "Junior",
                "Adult League", "Minor",
-               "U17", "U16", "U15", "U14", "U13", "U12", "Féile", "Kelly Cup"]
+               "U17", "U16", "U15", "U14", "U13", "U12", "F\u00e9ile", "Kelly Cup"]
 
 MONTHS = {m: i for i, m in enumerate(
     ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], 1)}
@@ -635,8 +638,8 @@ def grade_of(comp, branch="men"):
     for n in ("20", "17", "16", "15", "14", "13", "12"):
         if re.search(r"\bu-?%s\b|under[\s-]*%s\b" % (n, n), c):
             return "U" + n
-    if "féile" in c or "feile" in c:
-        return "Féile"
+    if "f\u00e9ile" in c or "feile" in c:
+        return "F\u00e9ile"
     if "minor" in c:
         return "Minor"
     if branch == "men":
